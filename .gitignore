@@ -1,0 +1,8 @@
+target/
+.idea/
+**/*.rs.bk
+将删除 .idea/libraries/
+将删除 .idea/thriftCompiler.xml
+将删除 .idea/workspace.xml
+*.iml
+*.lock
