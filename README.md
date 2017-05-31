@@ -1,0 +1,1 @@
+yet another os written by [Rust](https://www.rust-lang.org/zh-CN/)
