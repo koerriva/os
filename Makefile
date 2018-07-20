@@ -8,7 +8,6 @@ build:
 	 -c src/c/kernel.c -o out/kernel.o 
 	ld -n -o out/kernel.bin -T linker.ld out/*.o
 	cp src/resources/grub.cfg out/iso/boot/grub
-	cp src/resources/menu.lst out/iso/boot/grub
 	cp out/kernel.bin out/iso/boot
 	grub-mkrescue -o out/os.iso out/iso
 	qemu-system-x86_64 -cdrom out/os.iso
