@@ -1,6 +1,5 @@
 #include "type.h"
 void write_mem_64(UINT64 addr,UINT64 data);
-void sleep(void);
 void write_port_8(UINT32 port,UINT8 data);
 UINT8 read_port_8(UINT16 port);
 

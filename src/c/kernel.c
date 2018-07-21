@@ -1,12 +1,10 @@
 #include "include/lib.h"
 #include "include/vga.h"
-// #include "include/type.h"
 
 void set_mode(void);
 void put_pixel(UINT32 x,UINT32 y,UINT8 r, UINT8 g, UINT8 b);
 
 void kernel_main(){
-    // misc
     write_mem(0xb8000,0x2a592b412c4b2d4f);
     set_mode();
     for(UINT32 x=1;x<100;x++){
@@ -14,7 +12,7 @@ void kernel_main(){
             put_pixel(x,y,100,10,10); 
         }
     }
-    sleep();
+    while(1);
 }
 
 void write_regs(unsigned char* regs){

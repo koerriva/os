@@ -6,10 +6,6 @@
 * 当参数为 7 个以上时， 前 6 个与前面一样， 但后面的依次从 "右向左" 放入栈中。
 [Comment1](https://www.cnblogs.com/chenchenluo/archive/2012/04/02/2421457.html)
 
-# set VGA without BIOS
-Sets VGA-compatible video modes without using the BIOS
-[Comment2](https://files.osdev.org/mirrors/geezer/osd/graphics/modes.c)
-
 # 使用in和out指令对端口进行读写：
 
 * 和端口通信的数据只能用al和ax，8位数据用al，16位数据用ax，如果用其它寄存器会报错；
@@ -22,5 +18,8 @@ Sets VGA-compatible video modes without using the BIOS
 
 
 # vga 教程
+
+* Sets VGA-compatible video modes without using the BIOS
+[Comment2](https://files.osdev.org/mirrors/geezer/osd/graphics/modes.c)
 
 * [paper](https://github.com/AlgorithMan-de/wyoos/blob/master/src/drivers/vga.cpp)
