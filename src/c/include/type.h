@@ -1,4 +1,4 @@
-#define UINT8 unsigned char
-#define UINT16 unsigned short int
-#define UINT32 unsigned int
-#define UINT64 unsigned long
+#define uint8 unsigned char
+#define uint16 unsigned short int
+#define uint32 unsigned int
+#define uint64 unsigned long

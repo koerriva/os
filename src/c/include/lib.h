@@ -1,8 +1,8 @@
 #include "type.h"
-void write_mem_64(UINT64 addr,UINT64 data);
-void write_port_8(UINT32 port,UINT8 data);
-UINT8 read_port_8(UINT16 port);
+void write_port_8(uint16 port,uint8 data);
+uint8 read_port_8(uint16 port);
 
-#define write_mem write_mem_64
-#define outport write_port_8
-#define inport read_port_8
+#define outport     write_port_8
+#define inport      read_port_8
+
+void print(char* str);

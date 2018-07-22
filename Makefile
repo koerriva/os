@@ -5,7 +5,9 @@ build:
 	nasm -f elf64 src/asm/lib.asm -o out/lib.o
 	#nasm -f elf64 src/asm/vga.asm -o out/vga.o
 	gcc -ffreestanding -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2 \
-	 -c src/c/kernel.c -o out/kernel.o 
+	 -c src/c/kernel.c -o out/kernel.o
+	gcc -ffreestanding -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2 \
+	 -c src/c/io.c -o out/io.o
 	ld -n -o out/kernel.bin -T linker.ld out/*.o
 	cp src/resources/grub.cfg out/iso/boot/grub
 	cp out/kernel.bin out/iso/boot
