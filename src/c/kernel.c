@@ -5,9 +5,14 @@ void set_mode(int idx);
 void put_pixel(uint32 x,uint32 y,uint8 r, uint8 g, uint8 b);
 void put_pixel_(uint32 x,uint32 y,uint8 color_index);
 
-void kernel_main(){
-    print("Welcome My OS !");
-    set_mode(1);
+void kernel_main(uint64 magic,uint64 boot_info){
+    if(magic==0x0){
+        print("Welcome My OS !");
+    }else{
+        print("Something was wrong !");
+    }
+    
+    // set_mode(1);
     while(1);
 }
 
