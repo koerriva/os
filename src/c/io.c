@@ -25,10 +25,46 @@ struct TextPos {
     int y;
 } pos={0,0};
 
+extern void clear();
+extern void putc(char c,uint16 color);
 extern void print(char* str,uint16 color);
 extern void printf(char* str,uint16 color,long num);
 extern void printfs(char* str,uint16 color,long* params,int size);
 extern char* itoa(long num,char* str,int radix);
+
+void clear(){
+    uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT;
+    for(int i=0;i<TEXT_BUFFER_WIDTH*TEXT_BUFFER_HEIGHT;i++){
+        *(addr++) = 0;
+    };
+    pos.x=0;
+    pos.y=0;
+}
+
+void putc(char c,uint16 color){
+    if(c==0)return;
+    uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT;
+    if (c != '\n' && c != '\r') {
+        *(addr + pos.x + pos.y*TEXT_BUFFER_WIDTH) = color + c;
+        pos.x++;
+    }
+    if (pos.x >= TEXT_BUFFER_WIDTH || c == '\n' || c == '\r') {
+        for(int i=pos.x;i<TEXT_BUFFER_WIDTH;i++){
+            *(addr + pos.x + pos.y*TEXT_BUFFER_WIDTH) = 0x0;
+        }
+        pos.x=0;
+        pos.y++;
+        if (pos.y >= TEXT_BUFFER_HEIGHT) {
+            for (int i = 0; i < (TEXT_BUFFER_HEIGHT - 1) * TEXT_BUFFER_WIDTH; i++) {
+                *(addr+i) = *(addr + i + TEXT_BUFFER_WIDTH);
+            }
+            for (int i = (TEXT_BUFFER_HEIGHT - 1) * TEXT_BUFFER_WIDTH; i < (TEXT_BUFFER_HEIGHT * TEXT_BUFFER_WIDTH); i++) {
+                *(addr + i) = 0x0;
+            }
+            pos.y--;
+        }
+    }
+}
 
 void print(char* str,uint16 color){
     uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT + pos.y*TEXT_BUFFER_WIDTH + pos.x;
