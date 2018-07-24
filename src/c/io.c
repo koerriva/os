@@ -53,57 +53,40 @@ void putc(char c,uint16 color){
             *(addr + pos.x + pos.y*TEXT_BUFFER_WIDTH) = 0x0;
         }
         pos.x=0;
-        pos.y++;
         if (pos.y >= TEXT_BUFFER_HEIGHT) {
-            for (int i = 0; i < (TEXT_BUFFER_HEIGHT - 1) * TEXT_BUFFER_WIDTH; i++) {
+            for (int i = 0; i < TEXT_BUFFER_HEIGHT * TEXT_BUFFER_WIDTH; i++) {
                 *(addr+i) = *(addr + i + TEXT_BUFFER_WIDTH);
             }
-            for (int i = (TEXT_BUFFER_HEIGHT - 1) * TEXT_BUFFER_WIDTH; i < (TEXT_BUFFER_HEIGHT * TEXT_BUFFER_WIDTH); i++) {
-                *(addr + i) = 0x0;
-            }
             pos.y--;
+            *(addr + pos.x + pos.y*TEXT_BUFFER_WIDTH) = color + c;
+            pos.x++;
+        }else{
+            pos.y++;
         }
     }
 }
 
 void print(char* str,uint16 color){
-    uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT + pos.y*TEXT_BUFFER_WIDTH + pos.x;
     int i=-1;
     while(str[++i]!=0){
-        if(str[i]=='\n'){
-            pos.x=0;
-            pos.y++;
-        }else{
-            *(addr+pos.y*TEXT_BUFFER_WIDTH + pos.x) = str[i]+color;
-            pos.x++;
-        }
+        putc(str[i],color);
     }
 }
 
 void printf(char* str,uint16 color,long num){
     char temp[16]={0};
-    uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT + pos.y*TEXT_BUFFER_WIDTH + pos.x;
     int i=-1;
     while(str[++i]!=0){
         if(str[i]=='?'){
             print(itoa(num,temp,16),color);
-        }else if(str[i]=='\n'){
-            pos.x=0;
-            pos.y++;
         }else{
-            *(addr+pos.y*TEXT_BUFFER_WIDTH + pos.x) = str[i]+color;
-            pos.x++;
+            putc(str[i],color);
         }
     }
 }
 
 void printfs(char* str,uint16 color,long* params,int size){
     char temp[size][16];
-    for(int m=0;m<size;m++){
-        for(int n=0;n<16;n++){
-            temp[m][n]=0;
-        }
-    }
     uint16* addr = (uint16*)TEXT_BUFFER_SEGMENT + pos.y*TEXT_BUFFER_WIDTH + pos.x;
     int s = 0;
     for(int i=0;str[i]!=0;i++){
@@ -111,12 +94,8 @@ void printfs(char* str,uint16 color,long* params,int size){
         if(c=='?'){
             print(itoa(params[s],temp[s],16),color);
             s++;
-        }else if(c=='\n'){
-            pos.y=TEXT_BUFFER_WIDTH-pos.x;
-            pos.x=0;
         }else{
-            *(addr+pos.y + pos.x) = str[i]+color;
-            pos.x++;
+            putc(str[i],color);
         }
     }
 }

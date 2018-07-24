@@ -7,17 +7,18 @@ void put_pixel(uint32 x,uint32 y,uint8 r, uint8 g, uint8 b);
 void put_pixel_(uint32 x,uint32 y,uint8 color_index);
 
 void kernel_main(uint64 magic,uint64 addr){
+    clear();
     struct multiboot_tag *tag;
     unsigned size;
     if(magic==MULTIBOOT2_BOOTLOADER_MAGIC){
-        printf("Magic Number :?\n",0x0a00,magic);
+        printf("Magic Number : ?\n",0x0a00,magic);
     }
     if (addr & 7){
-       printf("Unaligned mbi :?\n",0x0c00,addr);
+       printf("Unaligned mbi : ?\n",0x0c00,addr);
     }
-    printf("Boot Info Addr :?\n",0x0a00,addr);
+    printf("Boot Info Addr :? \n",0x0a00,addr);
     size = *(unsigned *) addr;
-    printf("Announced mbi size :?\n",0x0a00,size);
+    printf("Announced mbi size : ?\n",0x0a00,size);
     for (tag = (struct multiboot_tag *) (addr + 8);
             tag->type != MULTIBOOT_TAG_TYPE_END;
             tag = (struct multiboot_tag *) ((multiboot_uint8_t *) tag
