@@ -1,19 +1,32 @@
 #include "include/lib.h"
 #include "include/vga.h"
+#include "include/multiboot2.h"
 
 void set_mode(int idx);
 void put_pixel(uint32 x,uint32 y,uint8 r, uint8 g, uint8 b);
 void put_pixel_(uint32 x,uint32 y,uint8 color_index);
 
-void kernel_main(uint64 magic,uint64 boot_info){
-    if(magic==0x0){
-        print("Welcome My OS !");
-    }else{
-        print("Something was wrong !");
+void kernel_main(uint64 magic,uint64 addr){
+    struct multiboot_tag *tag;
+    unsigned size;
+    if(magic==MULTIBOOT2_BOOTLOADER_MAGIC){
+        printf("Magic Number :?\n",0x0a00,magic);
     }
-    
+    if (addr & 7){
+       printf("Unaligned mbi :?\n",0x0c00,addr);
+    }
+    printf("Boot Info Addr :?\n",0x0a00,addr);
+    size = *(unsigned *) addr;
+    printf("Announced mbi size :?\n",0x0a00,size);
+    for (tag = (struct multiboot_tag *) (addr + 8);
+            tag->type != MULTIBOOT_TAG_TYPE_END;
+            tag = (struct multiboot_tag *) ((multiboot_uint8_t *) tag
+                                            + ((tag->size + 7) & ~7)))
+         {
+             long params[]={tag->type,tag->size};
+             printfs("Tag ?,Size ?\n", 0x0a00,params,2);
+         }
     // set_mode(1);
-    while(1);
 }
 
 void write_regs(unsigned char* regs){

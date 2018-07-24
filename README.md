@@ -1,10 +1,15 @@
 # make iso
 `sudo apt install grub-pc-bin`
 
-# c call nasm
+# c call nasm on Linux
 * 当参数少于7个时， 参数从左到右放入寄存器: rdi, rsi, rdx, rcx, r8, r9。
 * 当参数为 7 个以上时， 前 6 个与前面一样， 但后面的依次从 "右向左" 放入栈中。
-[Comment1](https://www.cnblogs.com/chenchenluo/archive/2012/04/02/2421457.html)
+[link](https://www.cnblogs.com/chenchenluo/archive/2012/04/02/2421457.html)
+
+# nasm call c on Linux
+
+* The first six integer or pointer arguments are passed in registers RDI, RSI, RDX, RCX, R8, and R9
+[link](https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI)
 
 # 使用in和out指令对端口进行读写：
 
@@ -20,6 +25,13 @@
 # vga 教程
 
 * Sets VGA-compatible video modes without using the BIOS
-[Comment2](https://files.osdev.org/mirrors/geezer/osd/graphics/modes.c)
+[link](https://files.osdev.org/mirrors/geezer/osd/graphics/modes.c)
 
-* [paper](https://github.com/AlgorithMan-de/wyoos/blob/master/src/drivers/vga.cpp)
+* [link](https://github.com/AlgorithMan-de/wyoos/blob/master/src/drivers/vga.cpp)
+
+# multiboot 显示模式切换问题
+* 每一个tag需要按8字节对齐
+[link](https://blog.csdn.net/lingrui_/article/details/48652567)
+
+# java bare metal os
+* [link](https://sourceforge.net/p/java-bare-metal/code/ci/master/tree/)

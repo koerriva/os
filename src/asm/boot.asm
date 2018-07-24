@@ -4,11 +4,9 @@ extern entry_64
 section .text
 bits 32
 start:
-    cmp eax,0x36d76289
-    jne error
-
     ;init stack
     mov esp, stack_top
+    push ebx
     push eax
     call check_multiboot
     call check_cpuid
@@ -17,11 +15,8 @@ start:
     call set_up_page_tables
     call enable_paging
     lgdt [gdt64.pointer]
-    pop eax
-    cmp eax, 0x36d76289
-    jne error
-    push eax
-    push eax
+    pop edi
+    pop esi
     jmp gdt64.code:entry_64
 
 ; Prints `ERR: ` and the given error code to screen and hangs.
@@ -148,7 +143,7 @@ p3_table:
 p2_table:
     resb 4096
 stack_bottom:
-    resb 64
+    resb 4096 * 4
 stack_top:
 
 section .rodata

@@ -12,7 +12,7 @@ build:
 	cp src/resources/grub.cfg out/iso/boot/grub
 	cp out/kernel.bin out/iso/boot
 	grub-mkrescue -o out/os.iso out/iso
-	qemu-system-x86_64 -cdrom out/os.iso
+	qemu-system-x86_64 -m 512 -cdrom out/os.iso
 
 clean:
 	rm -rf out
