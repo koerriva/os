@@ -1,3 +1,5 @@
+#include "type.h"
+
 #define MISC_PORT 0x3c2
 #define CRTC_INDEX_PORT 0x3d4
 #define CRTC_DATA_PORT 0x3d5
@@ -35,3 +37,7 @@
 
 #define VGA_WIDTH   320
 #define VGA_HEIGHT  200
+
+extern void set_mode(int idx);
+extern void put_pixel_rgb(uint32 x,uint32 y,uint8 r, uint8 g, uint8 b);
+extern void put_pixel_color(uint32 x,uint32 y,uint8 color_index);
