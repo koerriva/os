@@ -65,6 +65,12 @@
 #define MULTIBOOT_CONSOLE_FLAGS_CONSOLE_REQUIRED 1
 #define MULTIBOOT_CONSOLE_FLAGS_EGA_TEXT_SUPPORTED 2
 
+#define MULTIBOOT_MEMORY_AVAILABLE              1
+#define MULTIBOOT_MEMORY_RESERVED               2
+#define MULTIBOOT_MEMORY_ACPI_RECLAIMABLE       3
+#define MULTIBOOT_MEMORY_NVS                    4
+#define MULTIBOOT_MEMORY_BADRAM                 5
+#pragma pack(1)
 typedef unsigned char           multiboot_uint8_t;
 typedef unsigned short          multiboot_uint16_t;
 typedef unsigned int            multiboot_uint32_t;
@@ -166,11 +172,6 @@ struct multiboot_mmap_entry
 {
 multiboot_uint64_t addr;
 multiboot_uint64_t len;
-#define MULTIBOOT_MEMORY_AVAILABLE              1
-#define MULTIBOOT_MEMORY_RESERVED               2
-#define MULTIBOOT_MEMORY_ACPI_RECLAIMABLE       3
-#define MULTIBOOT_MEMORY_NVS                    4
-#define MULTIBOOT_MEMORY_BADRAM                 5
 multiboot_uint32_t type;
 multiboot_uint32_t zero;
 };
@@ -387,3 +388,4 @@ multiboot_uint32_t type;
 multiboot_uint32_t size;
 multiboot_uint32_t load_base_addr;
 };
+#pragma pack()

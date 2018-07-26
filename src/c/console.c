@@ -1,6 +1,7 @@
 #include "include/type.h"
 #include "include/console.h"
 #include "include/string.h"
+#include "include/serial.h"
 
 #define COLUMNS                 80
 #define LINES                   25
@@ -13,6 +14,18 @@ struct Pos {
 
 static uint16 color;
 static uint16* video;
+static int serial_out;
+
+void console_init(int so)
+{
+    video = (uint16*) VIDEO;
+    serial_out = so;
+    if (serial_out) {
+        init_serial();
+    }else{
+        cls();
+    }
+}
 
 void cls(){
     video = (uint16*)VIDEO;
@@ -29,6 +42,10 @@ void set_color(uint8 bg,uint8 fg){
 }
 
 static void putchar(char c){
+    if (serial_out) {
+        write_serial((char) c);
+        return;
+    }
     video = (uint16*)VIDEO;
     if(c==0)return;
     if (c != '\n' && c != '\r') {

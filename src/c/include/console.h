@@ -3,6 +3,7 @@
 
 #include "type.h"
 
+extern void console_init(int so);
 extern void cls();
 extern void set_color(uint8 bg, uint8 fg);
 extern void print(char* str);

@@ -36,4 +36,5 @@ entry_64:
     mov fs, ax
     mov gs, ax
     call kernel_main
-    hlt
+loop: hlt
+    jmp loop

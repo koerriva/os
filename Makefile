@@ -21,7 +21,7 @@ clean:
 	@rm -r out 
 
 run: $(iso)
-	@qemu-system-x86_64 -m 512 -cdrom $(iso)
+	@qemu-system-x86_64 -m 512 -serial file:serial.log -cdrom $(iso)
 
 iso: $(iso)
 

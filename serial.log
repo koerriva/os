@@ -1,0 +1,32 @@
+-------------------------
+Magic Num : 0x36d76289
+Boot Info Addr : 0x10a9c8
+VBE MODE    :0x4143
+VBE SEG     :0xffff
+VBE OFF     :0x6000
+VBE LEN     :0x4f
+VbeInfoBlock SIZE :512
+ModeInfoBlock SIZE :256
+VbeSignature：VESA
+VbeVersion:0x300
+Capabilities:0x1,0x0,0x0,0x0
+TotalMemory:256
+ModeAttributs:0xbb
+ASegment:0xa000,BSegment:0x0
+BytesPerScanLine:3200
+WinGranularity:64KB
+WinSize:64KB
+WinFuncPtr:0xffffffffc00054b6
+Res:800x600x32
+Banks:1,Planes:1
+ImagePages:7
+BankSize:0KB,MemoryModel:6
+2.0
+PhysBasePtr:0xfffffffffd000000
+Reserved2:0x0
+Reserved3:0
+3.0
+LinBytesPerScanLine:3200
+BankNumberOfImagePages:0
+LinNumberOfImagePages:0
+MaxClock:0Hz
