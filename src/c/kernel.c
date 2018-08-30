@@ -33,7 +33,7 @@ void kernel_main(uint64 magic,uint64 addr){
                     ,vb->Capabilities[1]
                     ,vb->Capabilities[2]
                     ,vb->Capabilities[3]);
-                printf("TotalMemory:%d\n",vb->TotalMemory);
+                printf("TotalMemory:%d*64KB\n",vb->TotalMemory);
 
                 struct ModeInfoBlock * mb = (struct ModeInfoBlock *)tagvbe->vbe_mode_info.external_specification;
                 printf("ModeAttributs:0x%x\n",mb->ModeAttributes);
@@ -41,7 +41,7 @@ void kernel_main(uint64 magic,uint64 addr){
                 printf("BytesPerScanLine:%d\n",mb->BytesPerScanLine);
                 printf("WinGranularity:%dKB\n",mb->WinGranularity);
                 printf("WinSize:%dKB\n",mb->WinSize);
-                printf("WinFuncPtr:0x%p\n",mb->WinFuncPtr);
+                printf("WinFuncPtr:0x%x\n",mb->WinFuncPtr);
                 printf("Res:%dx%dx%d\n",mb->XResolution,mb->YResolution,mb->BitsPerPixel);
                 printf("Banks:%d,Planes:%d\n",mb->NumberOfBanks,mb->NumberOfPlanes);
                 printf("ImagePages:%d\n",mb->NumberOfImagePages);
@@ -55,8 +55,8 @@ void kernel_main(uint64 magic,uint64 addr){
                 printf("BankNumberOfImagePages:%d\n",mb->BankNumberOfImagePages);
                 printf("LinNumberOfImagePages:%d\n",mb->LinNumberOfImagePages);
                 printf("MaxClock:%dHz\n",mb->MaxPixelClock);
-                break;
             }
+            break;
             case MULTIBOOT_TAG_TYPE_FRAMEBUFFER: {
                 multiboot_uint32_t color;
                 unsigned i;
@@ -90,7 +90,7 @@ void kernel_main(uint64 magic,uint64 addr){
                         break;
         
                     case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
-                        color = ((1 << tagfb->framebuffer_blue_mask_size) - 1) << tagfb->framebuffer_blue_field_position;
+                        color = ((1 << tagfb->framebuffer_green_mask_size) - 1) << tagfb->framebuffer_green_field_position;
                         break;
         
                     case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
@@ -107,30 +107,29 @@ void kernel_main(uint64 magic,uint64 addr){
                 uint8  bits = tagfb->common.framebuffer_bpp;
                 uint32 pitch = tagfb->common.framebuffer_pitch;
                 
-                // printf("Video Addr      :0x%x\n",fb);
-                // printf("Video Width     :%d\n",width);
-                // printf("Video Height    :%d\n",height);
-                // printf("Video Bpp       :%d\n",bits);
-                // printf("Video Pitch     :%d\n",pitch);
-                // printf("Vidoe Type      :%d\n",tagfb->common.framebuffer_type);
+                printf("Video Addr      :0x%x\n",fb);
+                printf("Video Width     :%d\n",width);
+                printf("Video Height    :%d\n",height);
+                printf("Video Bpp       :%d\n",bits);
+                printf("Video Pitch     :%d\n",pitch);
+                printf("Vidoe Type      :%d\n",tagfb->common.framebuffer_type);
 
                 multiboot_uint16_t *font = (multiboot_uint16_t *)fb;
-                multiboot_uint32_t *pixel = (multiboot_uint32_t *)(0xa0000);
-                for (i = 0; i < width; i++){
-                    switch (bits) {
-                        case 16:
-                            *(font++) = color;
-                            break;
+                uint32_t* pixel = (uint32_t *)vram;
+                const int NumberOfPixelPerScanLine = 3200/4;
+                const int NumberOfPixelPerWindow = 64*1024/4;
+                printf("color:0x%x\n",color);
+                switch(bits){
+                    case 16:*(font++) = color;break;
                         case 32:
-                            for(int j=0;j<height;j++){
-                                *(pixel++) = color;
+                        for(int x=0;x<width*height;i++){
+                            *(pixel++) = 0xE0EEEE;
                             }
                             break;
                         default:break;
                     }
                 }
                 break;
-            }
             default:break;
         }
     }
