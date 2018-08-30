@@ -1,4 +1,4 @@
-#include "include/lib.h"
+#include "include/stdlib.h"
 #include "include/video.h"
 #include "include/console.h"
 
