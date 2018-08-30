@@ -1,1 +1,0 @@
-int mod(long a,long b);

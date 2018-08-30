@@ -1,6 +1,6 @@
-#include "include/stdlib.h"
 #include "include/video.h"
-#include "include/console.h"
+#include "include/stdio.h"
+#include "include/stdlib.h"
 
 uint64 address(unsigned int pdpt_idx,unsigned int pt_idx){
     return 0|(pdpt_idx<<30)|(pt_idx<<21);

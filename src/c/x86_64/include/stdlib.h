@@ -1,9 +1,15 @@
 #include "type.h"
-extern void write_port_8(uint16 port,uint8 data);
-extern uint8 read_port_8(uint16 port);
-extern long _vm86(void *code,size_t size);
+
+#ifndef _STD_LIB_H_
+#define _STD_LIB_H_
+
 //libc
-extern void* mem_copy(void *dst, const void *src,size_t size);
+extern void *mem_copy(void *d, const void *s, unsigned n);
+
+//utils
+extern char* itoa(char* buf,char base,long d);
 
 #define outport     write_port_8
 #define inport      read_port_8
+
+#endif

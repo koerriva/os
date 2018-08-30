@@ -1,4 +1,5 @@
-#include "include/string.h"
+
+#include "include/stdlib.h"
 
 char* itoa(char* buf,char base,long d)
 {
@@ -40,4 +41,16 @@ char* itoa(char* buf,char base,long d)
       p1++;
       p2--;
     }
+}
+
+void *mem_copy(void *d, const void *s, unsigned n) {
+	unsigned i;
+	unsigned char *dst = (unsigned char *) d;
+	unsigned char *src = (unsigned char *) s;
+
+	for (i = 0; i < n; i++) {
+		dst[i] = src[i];
+	}
+
+	return dst;
 }

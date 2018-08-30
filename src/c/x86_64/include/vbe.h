@@ -1,6 +1,8 @@
+#include "type.h"
+
 #ifndef _VBE_H_
 #define _VBE_H_
-#include "type.h"
+
 #pragma pack (1)
 struct VbeInfoBlock {
     uint8_t  VbeSignature[4];    // == "VESA" 4

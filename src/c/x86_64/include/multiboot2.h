@@ -1,3 +1,6 @@
+#ifndef _MULTIBOOT2_H_
+#define _MULTIBOOT2_H_
+
 #define MULTIBOOT_HEADER 1
 
 /*  How many bytes from the start of the file we search for the header. */
@@ -389,3 +392,5 @@ multiboot_uint32_t size;
 multiboot_uint32_t load_base_addr;
 };
 #pragma pack()
+
+#endif
