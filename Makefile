@@ -1,4 +1,6 @@
 arch ?= x86_64
+c_32 := i386
+c_64 := x86_64
 kernel := out/kernel-$(arch).bin
 iso := out/os-$(arch).iso
 
@@ -8,8 +10,8 @@ grub_cfg := src/resources/grub.cfg
 assembly_source_files := $(wildcard src/asm/*.asm)
 assembly_object_files := $(patsubst src/asm/%.asm, out/asm/%.o, $(assembly_source_files))
 
-c_source_files := $(wildcard src/c/*.c)
-c_object_files := $(patsubst src/c/%.c, out/c/%.o, $(c_source_files))
+c_source_files := $(wildcard src/c/$(c_64)/*.c)
+c_object_files := $(patsubst src/c/$(c_64)/%.c, out/c/$(c_64)/%.o, $(c_source_files))
 
 object_files := $(c_object_files) $(assembly_object_files)
 
@@ -21,7 +23,7 @@ clean:
 	@rm -r out 
 
 run: $(iso)
-	@qemu-system-x86_64 -m 512 -serial file:serial.log -cdrom $(iso)
+	@qemu-system-x86_64 -m 512M -serial stdio -vga std -cdrom $(iso)
 
 iso: $(iso)
 
@@ -40,6 +42,6 @@ out/asm/%.o: src/asm/%.asm
 	@mkdir -p $(shell dirname $@)
 	@nasm -f elf64 $< -o $@
 
-out/c/%.o: src/c/%.c
+out/c/$(c_64)/%.o: src/c/$(c_64)/%.c
 	@mkdir -p $(shell dirname $@)
-	@gcc -ffreestanding -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -c $< -o $@
+	@gcc -ffreestanding -mcmodel=small -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -c $< -o $@

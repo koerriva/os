@@ -6,8 +6,8 @@ bits 32
 start:
     ;init stack
     mov esp, stack_top
-    push ebx
-    push eax
+    push ebx    ; boot info
+    ; push eax  ;magic number
     call check_multiboot
     call check_cpuid
     call check_long_mode
@@ -15,6 +15,8 @@ start:
     call set_up_page_tables
     call enable_paging
     lgdt [gdt64.pointer]
+    mov eax,p4_table
+    push eax
     pop edi
     pop esi
     jmp gdt64.code:entry_64
@@ -93,13 +95,17 @@ set_up_page_tables:
     mov [p4_table], eax
 
     ; map first P3 entry to P2 table
+    ; mov ecx, 0
     mov eax, p2_table
     or eax, 0b11 ; present + writable
+; .map_p3_page:
     mov [p3_table], eax
+    ; inc ecx
+    ; cmp ecx, 512
+    ; jne .map_p3_page
 
-    ; TODO map each P2 entry to a huge 2MiB page
+    ; map each P2 entry to a huge 2MiB page
     mov ecx, 0         ; counter variable
-
 .map_p2_table:
     ; map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx
     mov eax, 0x200000  ; 2MiB
@@ -107,10 +113,12 @@ set_up_page_tables:
     or eax, 0b10000011 ; present + writable + huge
     mov [p2_table + ecx * 8], eax ; map ecx-th entry
 
-    inc ecx            ; increase counter
-    cmp ecx, 512       ; if counter == 512, the whole P2 table is mapped
-    jne .map_p2_table  ; else map the next entry
+    inc ecx
+    cmp ecx,512
+    jne .map_p2_table
+
     ret
+
 enable_paging:
     ; load P4 to cr3 register (cpu uses this to access the P4 table)
     mov eax, p4_table
@@ -154,3 +162,4 @@ gdt64:
 .pointer:
     dw $ - gdt64 - 1
     dq gdt64
+

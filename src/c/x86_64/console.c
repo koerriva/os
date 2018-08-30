@@ -42,12 +42,12 @@ void set_color(uint8 bg,uint8 fg){
 }
 
 static void putchar(char c){
+    if(!c)return;
     if (serial_out) {
         write_serial((char) c);
         return;
     }
     video = (uint16*)VIDEO;
-    if(c==0)return;
     if (c != '\n' && c != '\r') {
         *(video + pos.x + pos.y*COLUMNS) = color + c;
         pos.x++;
@@ -71,14 +71,14 @@ static void putchar(char c){
 }
 
 void print(char* str){
-    int i=-1;
-    while(str[++i]!=0){
-        putchar(str[i]);
+    int i=0;
+    while(str[i]){
+        putchar(str[i++]);
     }
 }
 
 void vprintf (const char *format, va_list ap){
-    int i;
+    unsigned long i;
     char c;
     char buf[20];
 
@@ -97,7 +97,7 @@ void vprintf (const char *format, va_list ap){
             case 'u':
             case 'x':
             case 'p':
-                i = va_arg(ap, int);
+                i = va_arg(ap, unsigned long);
                 itoa (buf, c, i);
                 p = buf;
                 goto string;
@@ -114,7 +114,7 @@ void vprintf (const char *format, va_list ap){
                 break;
 
             default:
-                putchar (va_arg(ap, int));
+                putchar (va_arg(ap, unsigned long));
                 break;
             }
         }
