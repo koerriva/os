@@ -5,7 +5,7 @@ kernel := out/kernel-$(arch).bin
 iso := out/os-$(arch).iso
 
 linker_script := linker.ld
-grub_cfg := src/resources/grub.cfg
+grub_cfg := grub.cfg
 
 assembly_source_files := $(wildcard src/asm/*.asm)
 assembly_object_files := $(patsubst src/asm/%.asm, out/asm/%.o, $(assembly_source_files))
