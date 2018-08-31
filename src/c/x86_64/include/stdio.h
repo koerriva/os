@@ -1,5 +1,6 @@
 #include "type.h"
 #include "stdlib.h"
+#include "stdarg.h"
 
 #ifndef _STD_IO_H_
 #define _STD_IO_H_

@@ -52,7 +52,7 @@ void kernel_main(uint64 * pml4,void* addr){
         printf("VM:0x%x MM:0x%x\n",*(pd+y),y*0x200000U);
     }
 
-    uint32* vram = (uint32 *)0xa00000;
+    uint32* vram = (uint32 *)(5*0x200000U);
     printf("VIDEO MEMORY START : 0x%x,0x%x\n",vram,address(0,5));
     for(int i=0;i<videoInfo.width*videoInfo.height;i++){
         *(vram++) = 0x00FFFFAF;
