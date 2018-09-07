@@ -12,12 +12,12 @@ extern void print(char* str);
 extern void vprintf(const char *format, va_list ap); 
 extern void printf(const char *format, ...);
 
-extern void init_serial();
-extern char read_serial();
-extern void write_serial(char a);
+extern void outportb(uint16 port,uint8 data);
+extern uint8 inportb(uint16 port);
 
-extern void write_port_8(uint16 port,uint8 data);
-extern uint8 read_port_8(uint16 port);
+void init_serial();
+char read_serial();
+void write_serial(char a);
 
 #define CONSOLE_BLACK       0
 #define CONSOLE_BLUE        1

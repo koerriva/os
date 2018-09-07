@@ -1,6 +1,6 @@
 arch ?= x86_64
-GCC_FLAGS := -O2 -ffreestanding -mcmodel=kernel -mno-red-zone -mno-mmx -mno-sse -mno-sse2
-c_32 := i386
+GCC_FLAGS := -ffreestanding -fno-pic -mcmodel=kernel -mno-red-zone -mno-mmx -mno-sse -mno-sse2
+c_32 := i586
 c_64 := x86_64
 kernel := out/kernel-$(arch).bin
 iso := out/os-$(arch).iso
