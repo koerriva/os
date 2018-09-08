@@ -14,7 +14,10 @@ start:
 
     call set_up_page_tables
     call enable_paging
+    ; load gdt pointer
     lgdt [gdt64.pointer]
+    ; load idt pointer
+    lidt [idt64.pointer]
     mov eax,p4_table
     push eax
     pop edi
@@ -151,9 +154,12 @@ p3_table:
 p2_table:
     resb 4096
 stack_bottom:
-    resb 4096 * 512
+    resb 4096 * 4
 stack_top:
 
+global gdt64_base
+global idt64_base
+global tss64_base
 section .rodata
 gdt64:
     dq 0 ; zero entry
@@ -161,5 +167,17 @@ gdt64:
     dq (1<<43) | (1<<44) | (1<<47) | (1<<53) ; code segment
 .pointer:
     dw $ - gdt64 - 1
+gdt64_base:
     dq gdt64
 
+idt64:
+    times 512 db 0
+.pointer:
+    dw $ - idt64 - 1
+idt64_base:
+    dq idt64
+
+tss64:
+    times 13 db 0
+.pointer: dw $ - tss64 - 1
+tss64_base: dq tss64

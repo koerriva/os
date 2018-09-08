@@ -1,5 +1,5 @@
 arch ?= x86_64
-GCC_FLAGS := -ffreestanding -fno-pic -mcmodel=kernel -mno-red-zone -mno-mmx -mno-sse -mno-sse2
+GCC_FLAGS := -c -ffreestanding -fno-builtin -m64 -fno-pic -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2
 c_32 := i586
 c_64 := x86_64
 kernel := out/kernel-$(arch).bin
@@ -45,4 +45,4 @@ out/asm/%.o: src/asm/%.asm
 
 out/c/$(c_64)/%.o: src/c/$(c_64)/%.c
 	@mkdir -p $(shell dirname $@)
-	@gcc $(GCC_FLAGS) -c $< -o $@
+	@gcc $(GCC_FLAGS) $< -o $@

@@ -29,9 +29,14 @@ uint64 checkVMem(uint64 p){
     return addr;
 }
 
+extern uint64 gdt64_base;
+extern uint64 idt64_base;
+extern uint64 tss64_base;
+
 void kernel_main(uint64 * pml4,void* addr){
     console_init(1);
     printf("-------------------------\n");
+    printf("GTD Addr : 0x%x\nIDT Addr : 0x%x\nTSS Addr : 0x%x\n",gdt64_base,idt64_base,tss64_base);
     printf("INIT VIDEO ...\n");
     struct VideoInfo videoInfo;
     init_video(addr,&videoInfo);
