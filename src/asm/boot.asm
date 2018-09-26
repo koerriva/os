@@ -171,7 +171,7 @@ gdt64_base:
     dq gdt64
 
 idt64:
-    times 512 db 0
+    times 256*16 db 0
 .pointer:
     dw $ - idt64 - 1
 idt64_base:

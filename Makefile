@@ -24,7 +24,7 @@ clean:
 	@rm -r out 
 
 run: $(iso)
-	@qemu-system-x86_64 -m 512M -serial stdio -vga std -cdrom $(iso)
+	@qemu-system-x86_64 -m 512M -serial stdio -vga virtio -cdrom $(iso)
 
 iso: $(iso)
 
